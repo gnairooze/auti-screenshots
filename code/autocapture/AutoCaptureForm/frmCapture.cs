@@ -98,6 +98,8 @@ namespace AutoCaptureForm
 
                         resultBitmap.Save($"{capturePath}Capture-{captureDate}.jpg", ImageFormat.Jpeg);
                         resultBitmap.Dispose();
+                        left.Dispose();
+                        right.Dispose();
 
                         AddLog("screen captured");
                         return;
@@ -146,6 +148,8 @@ namespace AutoCaptureForm
 
                         resultBitmap.Save($"{capturePath}Capture-{captureDate}.jpg", ImageFormat.Jpeg);
                         resultBitmap.Dispose();
+                        top.Dispose();
+                        bottom.Dispose();
 
                         AddLog("screen captured");
                         return;
