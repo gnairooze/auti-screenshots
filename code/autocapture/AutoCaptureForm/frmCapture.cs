@@ -38,24 +38,45 @@ namespace AutoCaptureForm
                     captureGraphics.Dispose();
                 }
 
-                lstLog.Items.Insert(0, $"{DateTime.Now:yyyy-MM-dd HH-mm-ss-fff} | screen captured");
+                AddLog("screen captured");
             }
             catch (Exception ex)
             {
-                lstLog.Items.Insert(0, $"{DateTime.Now:yyyy-MM-dd HH-mm-ss-fff} | {ex.Message}");
+                AddLog(ex.Message);
             }
         }
 
         private void BtnStartCapture_Click(object sender, EventArgs e)
         {
             captureTimer.Enabled = true;
-            lstLog.Items.Insert(0, $"{DateTime.Now:yyyy-MM-dd HH-mm-ss-fff} | capture started");
+            AddLog("capture started");
         }
 
         private void BtnStopCapture_Click(object sender, EventArgs e)
         {
             captureTimer.Enabled = false;
-            lstLog.Items.Insert(0, $"{DateTime.Now:yyyy-MM-dd HH-mm-ss-fff} | capture stopped");
+            AddLog("capture stopped");
+        }
+
+        private void NumCaptureInterval_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                captureTimer.Interval = (int)numCaptureInterval.Value * 1000;
+            }
+            catch
+            {
+                AddLog("interval out of range.");
+                AddLog($"it should be between {numCaptureInterval.Minimum} and {numCaptureInterval.Maximum}");
+                
+                numCaptureInterval.Value = captureTimer.Interval / 1000;
+            }
+        }
+
+
+        private void AddLog(string msg)
+        {
+            lstLog.Items.Insert(0, $"{DateTime.Now:yyyy-MM-dd HH-mm-ss-fff} | {msg}");
         }
     }
 }
